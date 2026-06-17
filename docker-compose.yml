@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  moodsync:
+    build: .
+    container_name: moodsync
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./database:/app/database
+      - ./reports:/app/reports
+      - ./logs:/app/logs
+    environment:
+      - DATABASE_PATH=/app/database/moodsync.db
+      - LOG_LEVEL=INFO
+      - DEBUG_MODE=False
+    networks:
+      - moodsync-network
+    restart: unless-stopped
+
+networks:
+  moodsync-network:
+    driver: bridge
